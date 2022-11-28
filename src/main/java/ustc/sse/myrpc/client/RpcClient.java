@@ -15,11 +15,13 @@ public class RpcClient {
 
     public Object sendRequest(RpcRequest rpcRequest, String host, int port) {
         try (Socket socket = new Socket(host, port)) {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream.writeObject(rpcRequest);
-            objectOutputStream.flush();
-            return objectInputStream.readObject();
+            ObjectOutputStream Output = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream Input = new ObjectInputStream(socket.getInputStream());
+            Output.writeObject(rpcRequest);
+            Output.flush();
+            //flush()方法用于刷新此流，并将任何缓冲输出的字节立即写入基础流。
+            //flush()方法是一种非静态方法，只能通过类对象访问。
+            return Input.readObject();
         } catch (IOException | ClassNotFoundException e) {
             logger.error("调用时有错误发生：", e);
             return null;
