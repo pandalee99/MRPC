@@ -8,6 +8,14 @@
     <artifactId>MyRPC</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
+<!--        version4.0-->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+
+        <!--        version4.0-->
 <!--        version3.0-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

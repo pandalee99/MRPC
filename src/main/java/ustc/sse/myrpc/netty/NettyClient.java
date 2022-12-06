@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import ustc.sse.myrpc.client.RpcClient;
 import ustc.sse.myrpc.common.codec.CommonDecoder;
 import ustc.sse.myrpc.common.codec.CommonEncoder;
-import ustc.sse.myrpc.common.serializer.JsonSerializer;
+import ustc.sse.myrpc.common.serializer.KryoSerializer;
 import ustc.sse.myrpc.netty.handler.NettyClientHandler;
 import ustc.sse.myrpc.rpc.RpcRequest;
 import ustc.sse.myrpc.rpc.RpcResponse;
@@ -34,13 +34,13 @@ public class NettyClient implements RpcClient {
         bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
-                .option(ChannelOption.SO_KEEPALIVE, true)
+               // .option(ChannelOption.SO_KEEPALIVE, true)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast(new CommonDecoder())
-                                .addLast(new CommonEncoder(new JsonSerializer()))
+                                .addLast(new CommonEncoder(new KryoSerializer()))
                                 .addLast(new NettyClientHandler());
                     }
                 });
