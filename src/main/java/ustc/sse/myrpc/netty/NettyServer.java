@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ustc.sse.myrpc.common.codec.CommonDecoder;
 import ustc.sse.myrpc.common.codec.CommonEncoder;
-import ustc.sse.myrpc.common.serializer.KryoSerializer;
+import ustc.sse.myrpc.common.serializer.HessianSerializer;
 import ustc.sse.myrpc.netty.handler.NettyServerHandler;
 import ustc.sse.myrpc.server.RpcServer;
 
@@ -36,7 +36,7 @@ public class NettyServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new CommonEncoder(new KryoSerializer()));
+                            pipeline.addLast(new CommonEncoder(new HessianSerializer()));
                             pipeline.addLast(new CommonDecoder());
                             pipeline.addLast(new NettyServerHandler());
                         }
