@@ -14,6 +14,7 @@ import ustc.sse.myrpc.common.codec.CommonEncoder;
 import ustc.sse.myrpc.common.enumeration.RpcError;
 import ustc.sse.myrpc.common.exception.RpcException;
 import ustc.sse.myrpc.common.serializer.CommonSerializer;
+import ustc.sse.myrpc.common.util.RpcMessageChecker;
 import ustc.sse.myrpc.netty.handler.NettyClientHandler;
 import ustc.sse.myrpc.rpc.RpcRequest;
 import ustc.sse.myrpc.rpc.RpcResponse;
@@ -79,8 +80,9 @@ public class NettyClient implements RpcClient {
                     }
                 });
                 channel.closeFuture().sync();
-                AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse");
+                AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse" + rpcRequest.getRequestId());
                 RpcResponse rpcResponse = channel.attr(key).get();
+                RpcMessageChecker.check(rpcRequest, rpcResponse);
                 return rpcResponse.getData();
             }
         } catch (InterruptedException e) {

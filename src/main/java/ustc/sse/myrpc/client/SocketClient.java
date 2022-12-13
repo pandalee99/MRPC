@@ -7,6 +7,7 @@ import ustc.sse.myrpc.common.exception.RpcException;
 import ustc.sse.myrpc.common.serializer.CommonSerializer;
 import ustc.sse.myrpc.common.util.ObjectReader;
 import ustc.sse.myrpc.common.util.ObjectWriter;
+import ustc.sse.myrpc.common.util.RpcMessageChecker;
 import ustc.sse.myrpc.rpc.ResponseCode;
 import ustc.sse.myrpc.rpc.RpcRequest;
 import ustc.sse.myrpc.rpc.RpcResponse;
@@ -55,6 +56,7 @@ public class SocketClient implements RpcClient {
                 logger.error("调用服务失败, service: {}, response:{}", rpcRequest.getInterfaceName(), rpcResponse);
                 throw new RpcException(RpcError.SERVICE_INVOCATION_FAILURE, " service:" + rpcRequest.getInterfaceName());
             }
+            RpcMessageChecker.check(rpcRequest, rpcResponse);
             return rpcResponse.getData();
         } catch (IOException e) {
             logger.error("调用时有错误发生：", e);
