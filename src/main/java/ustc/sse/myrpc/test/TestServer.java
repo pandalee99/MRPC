@@ -1,6 +1,7 @@
 package ustc.sse.myrpc.test;
 
 
+import ustc.sse.myrpc.common.serializer.KryoSerializer;
 import ustc.sse.myrpc.netty.NettyServer;
 import ustc.sse.myrpc.registry.DefaultServiceRegistry;
 import ustc.sse.myrpc.registry.ServiceRegistry;
@@ -14,6 +15,8 @@ public class TestServer {
         ServiceRegistry registry = new DefaultServiceRegistry();
         registry.register(helloService);
         NettyServer server = new NettyServer();
+        server.setSerializer(new KryoSerializer());
+//        socketServer.setSerializer(new HessianSerializer());
         server.start(9999);
     }
 }
